@@ -1,0 +1,15 @@
+Makefile
+*.Debug
+*.Release
+*.moc
+*.objdebug
+*.objrelease
+*.user
+*.int
+debug
+release
+build-*/
+!*.lib
+!*.dll
+!*.exe
+.qmake.stash
