@@ -74,23 +74,18 @@ public:
 	{
 		m_arReadData = "";
 		QStringList strlist = data.split("\\");
-		if(strlist.count() < 2){
-			m_pclSocket->write(data.toLocal8Bit());
-			qDebug() << "send:" << data;
-		}
-		else{
-			QByteArray arData;
-			for(int i = 0; i < strlist.count(); i++){
-				if(i % 2){
-					arData.append(StrToArray(strlist[1]));	// バイナリ変換
-				}
-				else{
-					arData.append(strlist[0].toLocal8Bit());// 無変換
-				}
-			}
-			m_pclSocket->write(arData);
-		}
-	}
+        QByteArray arData;
+        for(int i = 0; i < strlist.count(); i++){
+            if(i % 2){
+                arData.append(StrToArray(strlist[i]));	// バイナリ変換
+            }
+            else{
+                arData.append(strlist[i].toLocal8Bit());// 無変換
+            }
+        }
+        m_pclSocket->write(arData);
+//        qDebug() << "write:" << data;
+    }
 	Q_INVOKABLE QByteArray read(void)
 	{
 		return m_arReadData;
@@ -132,7 +127,7 @@ private:
 	QString m_strIpaddr;
 	QString m_strMacaddr;
 	QString m_strPort;
-	QByteArray m_arReadData;
+    QByteArray m_arReadData;
 
 signals:
     void sigReadyRead(QString msg);
@@ -140,22 +135,18 @@ signals:
 
 private slots:
 	void tcpConnect()
-	{
-//		qDebug() << "connected";
+    {
 	}
 	void tcpDisconnect()
-	{
-//		qDebug() << "disconnected";
+    {
 	}
     void slotReadyRead()
 	{
-		m_arReadData = m_pclSocket->readAll();
-//		qDebug() << "recv:" << m_arReadData;
+        m_arReadData = m_pclSocket->readAll();
         emit sigReadyRead(m_arReadData);
 	}
 	void error()
-	{
-//      qDebug() << "error:" << m_pclSocket->errorString();
+    {
         emit sigError(m_pclSocket->errorString());
 	}
 };

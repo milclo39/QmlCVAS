@@ -12,6 +12,10 @@ Item {
     }
     Network {
         id: eth1
+        Component.onCompleted: {
+            eth1.setIpaddr("192.168.1.101")
+            eth1.setPort("5136")
+        }
         onSigReadyRead: {    // 受信通知
             console.log("eth1: " + msg)
             switch(msg){
@@ -22,6 +26,10 @@ Item {
     }
     Network {
         id: eth2
+        Component.onCompleted: {
+            eth2.setIpaddr("192.168.1.100")
+            eth2.setPort("5136")
+        }
         onSigReadyRead: {    // 受信通知
             console.log("eth2: " + msg)
             switch(msg){
@@ -44,9 +52,11 @@ Item {
         MouseArea{
             anchors.fill: parent
             onClicked: {
-                eth1.connectToHost("localhost", "5136")
+                eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
                 eth1.write("\\55AA07\\00CO1HI")
-                eth2.connectToHost("localhost", "1024")
+                eth1.write("\\55AA07\\00CO1LO")
+                eth1.write("ahoahoahoaoaho")
+                eth2.connectToHost(eth2.getIpaddr(), eth2.getPort())
                 eth2.write("ahoahoahoaho")
                 console.log("onClicked")
             }
