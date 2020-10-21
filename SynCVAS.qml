@@ -40,46 +40,44 @@ Item {
     }
 
     Image{ id: bg; anchors.fill: parent; source: imagepath + "bg_01.png" }  // 背景
-    Rectangle{
-        id: btn1
-        x: 0; y: 0; width: 96; height: 96
-        color: "transparent"
-        Image{
-            anchors.fill: parent
-            source: if(parent.state === "on") imagepath + "btnbl_05.png"
-                    else imagepath + "btndk_05.png"
+    Button01{
+        x: 0; y: 0; width: 100; height: 100
+        btnText: "ahoaho"
+        onSigClicked: {
+            eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+            eth1.write("\\55AA07\\00CO1HI")
+            console.log("onClicked:" + e)
         }
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                eth1.write("\\55AA07\\00CO1HI")
-                eth1.write("\\55AA07\\00CO1LO")
-                eth1.write("ahoahoahoaoaho")
-                eth2.connectToHost(eth2.getIpaddr(), eth2.getPort())
-                eth2.write("ahoahoahoaho")
-                console.log("onClicked")
-            }
-            onPressed: {parent.state = "on"; parent.scale = 1.2}
-            onReleased: {parent.state = "off"; parent.scale = 1.0}
+	}
+    Button01{
+        x: 100; y: 0; width: 100; height: 100
+        btnText: "tako"
+        onSigClicked: {
+            eth2.connectToHost(eth2.getIpaddr(), eth2.getPort())
+            eth2.write("\\55AA07\\00CO1LO")
+            console.log("onClicked:" + e)
         }
     }
-    Rectangle{
-        id: btn2
-        x: 200; y: 0; width: 96; height: 96
-        color: "transparent"
-        Image{
-            anchors.fill: parent
-            source: if(parent.state === "on") imagepath + "btnbl_01.png"
-                    else imagepath + "btndk_01.png"
+    Slider01{
+        x: 0; y: 100; width: 300; height: 50
+        onSigPosChanged: {
+            console.log("onSigPosChanged:" + e)
+            eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+            eth1.write("\\55AA07\\00SC1" + e)
         }
-        MouseArea{
-            anchors.fill: parent
-            onClicked: {
-                tmr1.start()
-            }
-            onPressed: {parent.state = "on"; parent.scale = 1.2}
-            onReleased: {parent.state = "off"; parent.scale = 1.0}
+        onSigMuteClick: {
+            console.log("onSigMuteClick:" + e)
+        }
+	}
+    Slider01{
+        x: 0; y: 150; width: 300; height: 50
+        onSigPosChanged: {
+            console.log("onSigPosChanged:" + e)
+            eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+            eth1.write("\\55AA07\\00SC1" + e)
+        }
+        onSigMuteClick: {
+            console.log("onSigMuteClick:" + e)
         }
     }
     Timer{
