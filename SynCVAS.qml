@@ -1,5 +1,6 @@
 import QtQuick 2.0
 import Network 1.0
+import QtQuick.Layouts 1.3
 
 Item {
     anchors.fill: parent
@@ -24,69 +25,168 @@ Item {
         }
         onSigError: console.log("error eth1: " + msg)
     }
-    Network {
-        id: eth2
-        Component.onCompleted: {
-            eth2.setIpaddr("192.168.1.100")
-            eth2.setPort("5136")
-        }
-        onSigReadyRead: {    // 受信通知
-            console.log("eth2: " + msg)
-            switch(msg){
-            default:
-            }
-        }
-        onSigError: console.log("error eth2: " + msg)
-    }
 
     Image{ id: bg; anchors.fill: parent; source: imagepath + "bg_01.png" }  // 背景
-    Button01{
-        x: 0; y: 0; width: 100; height: 100
-        btnText: "ahoaho"
-        onSigClicked: {
-            eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-            eth1.write("\\55AA07\\00CO1HI")
-            console.log("onClicked:" + e)
+    ColumnLayout{
+        RowLayout{
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button01{
+                width: 100; height: 100
+                btnIcon: imagepath + "up.png"
+                onSigClicked: {
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth1.write("\\55AA07\\00CO1HI")
+                    console.log("onClicked:" + e)
+                }
+            }
         }
-	}
-    Button01{
-        x: 100; y: 0; width: 100; height: 100
-        btnText: "tako"
-        onSigClicked: {
-            eth2.connectToHost(eth2.getIpaddr(), eth2.getPort())
-            eth2.write("\\55AA07\\00CO1LO")
-            console.log("onClicked:" + e)
+        RowLayout{
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button01{
+                width: 100; height: 100
+                btnIcon: imagepath + "left.png"
+                onSigClicked: {
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth1.write("\\55AA07\\00CO1HI")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                width: 100; height: 100
+                btnText: "ENTER"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                width: 100; height: 100
+                btnIcon: imagepath + "right.png"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
         }
-    }
-    Slider01{
-        x: 0; y: 100; width: 300; height: 50
-        onSigPosChanged: {
-            console.log("onSigPosChanged:" + e)
-            eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-            eth1.write("\\55AA07\\00SC1" + e)
+        RowLayout{
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button01{
+                width: 100; height: 100
+                btnIcon: imagepath + "down.png"
+                onSigClicked: {
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth1.write("\\55AA07\\00CO1HI")
+                    console.log("onClicked:" + e)
+                }
+            }
         }
-        onSigMuteClick: {
-            console.log("onSigMuteClick:" + e)
+        RowLayout{
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button01{
+                btnIcon: imagepath + "rew.png"
+                onSigClicked: {
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth1.write("\\55AA07\\00CO1HI")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                width: 168
+                btnIcon: imagepath + "play.png"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                btnIcon: imagepath + "ff.png"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
         }
-	}
-    Slider01{
-        x: 0; y: 150; width: 300; height: 50
-        onSigPosChanged: {
-            console.log("onSigPosChanged:" + e)
-            eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-            eth1.write("\\55AA07\\00SC1" + e)
+        RowLayout{
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button01{
+                btnIcon: imagepath + "r-skip.png"
+                onSigClicked: {
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth1.write("\\55AA07\\00CO1HI")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                btnIcon: imagepath + "pause.png"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                btnIcon: imagepath + "stop.png"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                btnIcon: imagepath + "f-skip.png"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
         }
-        onSigMuteClick: {
-            console.log("onSigMuteClick:" + e)
+        RowLayout{
+            anchors.horizontalCenter: parent.horizontalCenter
+            Button01{
+                width: 168
+                btnText: "BACK"
+                onSigClicked: {
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth1.write("\\55AA07\\00CO1HI")
+                    console.log("onClicked:" + e)
+                }
+            }
+            Button01{
+                width: 168
+                btnText: "MENU"
+                onSigClicked: {
+                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    eth2.write("\\55AA07\\00CO1LO")
+                    console.log("onClicked:" + e)
+                }
+            }
         }
+        /*
+        Slider01{
+            anchors.horizontalCenter: parent.horizontalCenter
+            onSigPosChanged: {
+                console.log("onSigPosChanged:" + e)
+                eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                eth1.write("\\55AA07\\00SC1" + e)
+            }
+            onSigMuteClick: {
+                console.log("onSigMuteClick:" + e)
+            }
+        }
+        */
     }
     Timer{
         id: tmr1
         interval: 3000
         repeat: true
         onTriggered: {
-            eth2.connectToHost("localhost", "1024")
-            eth2.write("ahoahoahoaho")
+            eth1.connectToHost("localhost", "1024")
+            eth1.write("ahoahoahoaho")
             console.log("onTriggered")
         }
     }

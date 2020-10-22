@@ -3,7 +3,7 @@ import Network 1.0
 
 Rectangle{
     id: _root
-    x: 0; y: 0; width: 100; height: 100
+    x: 0; y: 0; width: 80; height: 80
     color: "transparent"
 
     property string btnText: ""
@@ -11,14 +11,22 @@ Rectangle{
     property int btnTextSize: 24
     property string btnTextColor: "white"
     property int btnTextPos: 0
+    property string btnImageOff: imagepath + "btndk_05.png"
+    property string btnImageOn: imagepath + "btnbl_05.png"
+    property string btnIcon: ""
 
     signal sigClicked(int e)
 
     Image{
         anchors.fill: parent
         anchors.margins: 10
-        source: if(parent.state === "on") imagepath + "btnbl_05.png"
-                else imagepath + "btndk_05.png"
+        source: if(parent.state === "on") btnImageOn
+                else btnImageOff
+    }
+    Image{
+        anchors.fill: parent
+        anchors.margins: 10
+        source: btnIcon
     }
     Text{   // 文字
         id: text
