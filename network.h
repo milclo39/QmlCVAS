@@ -32,7 +32,21 @@ public:
 		m_strIpaddr = settings.value("IPADDR", "192.168.0.100").toString();
 		m_strMacaddr = settings.value("MACADDR", "00099A000000").toString();
 		m_strPort = settings.value("PORT", "2101").toString();
-	}
+        m_strlistCmd.append(settings.value("CMD01", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD02", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD03", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD04", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD05", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD06", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD07", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD08", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD09", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD10", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD11", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD12", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD13", "00CO1HI").toString());
+        m_strlistCmd.append(settings.value("CMD14", "00CO1HI").toString());
+    }
 	~Network()
 	{
 #ifdef Q_OS_WIN
@@ -51,6 +65,7 @@ public:
 	Q_INVOKABLE QString getIpaddr(){return m_strIpaddr;}
 	Q_INVOKABLE QString getMacaddr(){return m_strMacaddr;}
 	Q_INVOKABLE QString getPort(){return m_strPort;}
+    Q_INVOKABLE QString getCmd(int i){return m_strlistCmd[i];}
 	Q_INVOKABLE void setIpaddr(QString str){m_strIpaddr = str;}
 	Q_INVOKABLE void setMacaddr(QString str){m_strMacaddr = str;}
 	Q_INVOKABLE void setPort(QString str){m_strPort = str;}
@@ -84,7 +99,7 @@ public:
             }
         }
         m_pclSocket->write(arData);
-//        qDebug() << "write:" << data;
+        qDebug() << "write:" << arData;
     }
 	Q_INVOKABLE QByteArray read(void)
 	{
@@ -127,6 +142,7 @@ private:
 	QString m_strIpaddr;
 	QString m_strMacaddr;
 	QString m_strPort;
+    QList<QString> m_strlistCmd;
     QByteArray m_arReadData;
 
 signals:

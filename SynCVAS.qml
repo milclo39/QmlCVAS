@@ -14,7 +14,7 @@ Item {
     Network {
         id: eth1
         Component.onCompleted: {
-            eth1.setIpaddr("192.168.1.101")
+            eth1.setIpaddr("192.168.1.100")
             eth1.setPort("5136")
         }
         onSigReadyRead: {    // 受信通知
@@ -28,14 +28,20 @@ Item {
 
     Image{ id: bg; anchors.fill: parent; source: imagepath + "bg_01.png" }  // 背景
     ColumnLayout{
+        anchors.horizontalCenter: parent.horizontalCenter
         RowLayout{
             anchors.horizontalCenter: parent.horizontalCenter
             Button01{
                 width: 100; height: 100
-                btnIcon: imagepath + "up.png"
+                btnIcon: imagepath + "icon_menu_up.png"
                 onSigClicked: {
                     eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth1.write("\\55AA07\\00CO1HI")
+                    if(!e){
+                        eth1.write(eth1.getCmd(0))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
@@ -44,28 +50,43 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             Button01{
                 width: 100; height: 100
-                btnIcon: imagepath + "left.png"
+                btnIcon: imagepath + "icon_menu_left.png"
                 onSigClicked: {
                     eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth1.write("\\55AA07\\00CO1HI")
+                    if(!e){
+                        eth1.write(eth1.getCmd(1))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
             Button01{
                 width: 100; height: 100
-                btnText: "ENTER"
+                btnIcon: imagepath + "icon_menu_enter.png"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(2))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
             Button01{
                 width: 100; height: 100
-                btnIcon: imagepath + "right.png"
+                btnIcon: imagepath + "icon_menu_right.png"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(3))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
@@ -74,10 +95,15 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             Button01{
                 width: 100; height: 100
-                btnIcon: imagepath + "down.png"
+                btnIcon: imagepath + "icon_menu_down.png"
                 onSigClicked: {
                     eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth1.write("\\55AA07\\00CO1HI")
+                    if(!e){
+                        eth1.write(eth1.getCmd(4))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
@@ -85,27 +111,42 @@ Item {
         RowLayout{
             anchors.horizontalCenter: parent.horizontalCenter
             Button01{
-                btnIcon: imagepath + "rew.png"
+                btnIcon: imagepath + "icon_media_rew.png"
                 onSigClicked: {
                     eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth1.write("\\55AA07\\00CO1HI")
+                    if(!e){
+                        eth1.write(eth1.getCmd(5))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
             Button01{
                 width: 168
-                btnIcon: imagepath + "play.png"
+                btnIcon: imagepath + "icon_media_play.png"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(6))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
             Button01{
-                btnIcon: imagepath + "ff.png"
+                btnIcon: imagepath + "icon_media_ff.png"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(7))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
@@ -113,34 +154,54 @@ Item {
         RowLayout{
             anchors.horizontalCenter: parent.horizontalCenter
             Button01{
-                btnIcon: imagepath + "r-skip.png"
+                btnIcon: imagepath + "icon_media_return.png"
                 onSigClicked: {
                     eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth1.write("\\55AA07\\00CO1HI")
+                    if(!e){
+                        eth1.write(eth1.getCmd(8))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
             Button01{
-                btnIcon: imagepath + "pause.png"
+                btnIcon: imagepath + "icon_media_pause.png"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(9))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
             Button01{
-                btnIcon: imagepath + "stop.png"
+                btnIcon: imagepath + "icon_media_stop.png"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(10))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
             Button01{
-                btnIcon: imagepath + "f-skip.png"
+                btnIcon: imagepath + "icon_media_next.png"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(11))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
@@ -149,10 +210,15 @@ Item {
             anchors.horizontalCenter: parent.horizontalCenter
             Button01{
                 width: 168
-                btnText: "BACK"
+                btnIcon: imagepath + "icon_menu_back.png"
                 onSigClicked: {
                     eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth1.write("\\55AA07\\00CO1HI")
+                    if(!e){
+                        eth1.write(eth1.getCmd(12))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
@@ -160,8 +226,13 @@ Item {
                 width: 168
                 btnText: "MENU"
                 onSigClicked: {
-                    eth2.connectToHost(eth1.getIpaddr(), eth1.getPort())
-                    eth2.write("\\55AA07\\00CO1LO")
+                    eth1.connectToHost(eth1.getIpaddr(), eth1.getPort())
+                    if(!e){
+                        eth1.write(eth1.getCmd(13))
+                    }
+                    else{
+                        eth1.write("\\55aa08\\00IR1SRT")
+                    }
                     console.log("onClicked:" + e)
                 }
             }
