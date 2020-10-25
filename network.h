@@ -24,6 +24,14 @@ public:
 		connect(m_pclSocket, SIGNAL(disconnected()), this, SLOT(tcpDisconnect()));
         connect(m_pclSocket, SIGNAL(readyRead()), this, SLOT(slotReadyRead()));
 		connect(m_pclSocket, SIGNAL(error(QAbstractSocket::SocketError)), this, SLOT(error()));
+        getSetting();
+    }
+	~Network()
+	{
+        setSetting();
+	}
+    void getSetting()
+    {
 #ifdef Q_OS_WIN
 		QSettings settings(qApp->applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
 #else
@@ -47,7 +55,7 @@ public:
         m_strlistCmd.append(settings.value("CMD13", "00CO1HI").toString());
         m_strlistCmd.append(settings.value("CMD14", "00CO1HI").toString());
     }
-	~Network()
+	void setSetting()
 	{
 #ifdef Q_OS_WIN
 		QSettings settings(qApp->applicationDirPath() + "\\setting.ini", QSettings::IniFormat);
@@ -130,6 +138,7 @@ public:
 	Q_INVOKABLE void close()
 	{
 		m_pclSocket->close();
+        setSetting();
 	}
 	Q_INVOKABLE void wakeOnLan(QString strIpaddr, QString strMac)
 	{

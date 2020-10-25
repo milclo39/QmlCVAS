@@ -348,6 +348,7 @@ Item {
                 parent.state = "off";
                 text = "≡"
                 bg.source  = imagepath + "bg_01.png"
+                eth1.close()
             }
         }
     }
