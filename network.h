@@ -58,6 +58,20 @@ public:
 		settings.setValue("IPADDR", m_strIpaddr);
 		settings.setValue("MACADDR", m_strMacaddr);
 		settings.setValue("PORT", m_strPort);
+        settings.setValue("CMD01", m_strlistCmd[0]);
+        settings.setValue("CMD02", m_strlistCmd[1]);
+        settings.setValue("CMD03", m_strlistCmd[2]);
+        settings.setValue("CMD04", m_strlistCmd[3]);
+        settings.setValue("CMD05", m_strlistCmd[4]);
+        settings.setValue("CMD06", m_strlistCmd[5]);
+        settings.setValue("CMD07", m_strlistCmd[6]);
+        settings.setValue("CMD08", m_strlistCmd[7]);
+        settings.setValue("CMD09", m_strlistCmd[8]);
+        settings.setValue("CMD10", m_strlistCmd[9]);
+        settings.setValue("CMD11", m_strlistCmd[10]);
+        settings.setValue("CMD12", m_strlistCmd[11]);
+        settings.setValue("CMD13", m_strlistCmd[12]);
+        settings.setValue("CMD14", m_strlistCmd[13]);
 #ifndef Q_OS_WIN
 		settings.sync();
 #endif
@@ -69,7 +83,8 @@ public:
 	Q_INVOKABLE void setIpaddr(QString str){m_strIpaddr = str;}
 	Q_INVOKABLE void setMacaddr(QString str){m_strMacaddr = str;}
 	Q_INVOKABLE void setPort(QString str){m_strPort = str;}
-	Q_INVOKABLE void connectToHost(QString strIp, quint16 port)
+    Q_INVOKABLE void setCmd(int i, QString str){m_strlistCmd[i] = str;}
+    Q_INVOKABLE void connectToHost(QString strIp, quint16 port)
 	{
 		if(m_pclSocket->isOpen()){
 			m_pclSocket->close();	// 一旦閉じる
@@ -103,7 +118,14 @@ public:
     }
 	Q_INVOKABLE QByteArray read(void)
 	{
-		return m_arReadData;
+        QString strTmp = "\\";
+        for(int i = 0; i < m_arReadData.size(); i++){
+            QString str;
+            str.sprintf("%02x", (unsigned char)m_arReadData.at(i));
+            strTmp.append(str);
+        }
+        strTmp.append("\\");
+        return strTmp.toLocal8Bit();
 	}
 	Q_INVOKABLE void close()
 	{

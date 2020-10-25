@@ -4,5 +4,6 @@
         <file>Button01.qml</file>
         <file>Slider01.qml</file>
         <file>SynCVAS.qml</file>
+        <file>Button02.qml</file>
     </qresource>
 </RCC>
